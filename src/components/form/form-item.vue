@@ -34,7 +34,7 @@ export default {
   computed: {
     // 从 Form 的 model 中动态得到当前表单组件的数据
     fieldValue() {
-      return this.from.model[this.prop]
+      return this.form.model[this.prop]
     }
   },
   // 组件渲染时，将实例缓存在 Form 中
@@ -68,7 +68,7 @@ export default {
     },
     // 从 Form 的 rules 属性中，获取当前 FormItem 的校验规则
     getRules() {
-      let fromRules = this.form.rules
+      let formRules = this.form.rules
       formRules = formRules ? formRules[this.prop] : []
       return [].concat(formRules || [])
     },
@@ -109,12 +109,13 @@ export default {
       })
     },
     onFieldBlur() {
+      console.log(1)
       this.validate('blur')
     },
     onFieldChange() {
       this.validate('change')
     },
-    resetField() {
+    resetFields() {
       this.validateState = ''
       this.validateMessage = ''
 
@@ -124,5 +125,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.i-form-item-label-required:before {
+  content: "*";
+  color: red;
+}
+.i-form-item-message {
+  color: red;
+}
 </style>
 
