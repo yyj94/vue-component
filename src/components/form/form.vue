@@ -6,6 +6,11 @@
 <script>
 export default {
   name: 'iForm',
+  provide() {
+    return {
+      form: this
+    }
+  },
   props: {
     model: {
       type: Object    // 表单数据对象
