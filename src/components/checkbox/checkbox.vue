@@ -1,13 +1,22 @@
 <template>
   <label>
     <span>
-      <input type="checkbox" :disabled="disabled" :checked="currentValue" @change="change" />
+      <input
+        v-if="group"
+        type="checkbox"
+        :disabled="disabled"
+        :value="label"
+        v-model="model"
+        @change="change"
+      />
+      <input v-else type="checkbox" :disabled="disabled" :checked="currentValue" @change="change" />
     </span>
     <slot></slot>
   </label>
 </template>
 <script>
 import Emitter from "../../mixins/emitter";
+import { findComponentUpward } from "../../utils/assist.js";
 
 export default {
   name: "iCheckbox",
@@ -28,11 +37,17 @@ export default {
     falseValue: {
       type: [String, Number, Boolean],
       default: false
+    },
+    label: {
+      type: [String, Number, Boolean]
     }
   },
   data() {
     return {
-      currentValue: this.value
+      currentValue: this.value,
+      model: [],
+      group: false,
+      parent: null
     };
   },
   watch: {
@@ -44,6 +59,19 @@ export default {
       }
     }
   },
+  mounted() {
+    this.parent = findComponentUpward(this, "iCheckboxGroup");
+
+    if (this.parent) {
+      this.group = true;
+    }
+
+    if (this.group) {
+      this.parent.updateModel(true);
+    } else {
+      this.updateModel();
+    }
+  },
   methods: {
     change(event) {
       if (this.disabled) return false;
@@ -53,8 +81,13 @@ export default {
 
       const value = checked ? this.trueValue : this.falseValue;
       this.$emit("input", value);
-      this.$emit("on-change", value);
-      this.dispatch("iFormItem", "on-form-change", value);
+
+      if (this.group) {
+        this.parent.change(this.model);
+      } else {
+        this.$emit("on-change", value);
+        this.dispatch("iFormItem", "on-form-change", value);
+      }
     },
     updateModel() {
       this.currentValue = this.value === this.trueValue;
