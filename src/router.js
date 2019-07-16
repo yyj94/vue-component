@@ -10,6 +10,11 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/table",
+      name: "table",
+      component: () => import("./views/table-render.vue")
     }
     // {
     //   path: '/about',
