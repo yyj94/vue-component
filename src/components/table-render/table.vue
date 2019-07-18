@@ -6,29 +6,44 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in data">
-        <td v-for="col in columns">{{row[col.key]}}</td>
+      <tr v-for="(row, rowIndex) in data">
+        <td v-for="col in columns">
+          <template v-if="'render' in col">
+            <Render :row="row" :column="col" :index="rowIndex" :render="col.render"></Render>
+          </template>
+          <template v-else>{{row[col.key]}}</template>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
 export default {
+  components: { Render },
   props: {
     columns: {
       type: Array,
-      default() {  // 如果 props的类型是对象或数组，它的默认值必须从一个工厂函数获取
-        return []
+      default() {
+        // 如果 props的类型是对象或数组，它的默认值必须从一个工厂函数获取
+        return [];
       }
     },
     data: {
       type: Array,
       default() {
-        return []
+        return [];
       }
     }
+  },
+  data() {
+    return {
+      editName: "", // 第一列输入框
+      editAge: "", // 第二列输入框
+      editBirthday: "", // 第三列输入框
+      editAddress: "" // 第四列输入框
+    };
   }
-}
+};
 </script>
 <style lang="less" scoped>
 table {
