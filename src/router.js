@@ -5,16 +5,20 @@ import Home from "./views/Home.vue";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "home",
       component: Home
     },
     {
-      path: "/table",
+      path: "/table-render",
       name: "table",
       component: () => import("./views/table-render.vue")
+    },
+    {
+      path: "/table-slot",
+      name: "table",
+      component: () => import("./views/table-slot.vue")
     }
     // {
     //   path: '/about',

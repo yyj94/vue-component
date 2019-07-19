@@ -11,6 +11,9 @@
           <template v-if="'render' in col">
             <Render :row="row" :column="col" :index="rowIndex" :render="col.render"></Render>
           </template>
+          <template v-else-if="'slot' in col">
+            <slot :row="row" :column="col" :index="rowIndex" :name="col.slot"></slot>
+          </template>
           <template v-else>{{row[col.key]}}</template>
         </td>
       </tr>
@@ -38,13 +41,7 @@ export default {
     }
   },
   data() {
-    return {
-      editName: "", // 第一列输入框
-      editAge: "", // 第二列输入框
-      editBirthday: "", // 第三列输入框
-      editAddress: "", // 第四列输入框
-      editIndex: -1 // 当前聚焦的输入框的行数
-    };
+    return {};
   }
 };
 </script>
