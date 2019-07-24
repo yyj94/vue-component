@@ -38,7 +38,7 @@ export default {
               edit = row.name;
             }
 
-            return h("div", [edit]);
+            return h("div", edit);
           }
         },
         {
@@ -65,7 +65,7 @@ export default {
               edit = row.age;
             }
 
-            return h("div", [edit]);
+            return h("div", edit);
           }
         },
         {
@@ -96,7 +96,7 @@ export default {
               edit = `${year}-${month}-${day}`;
             }
 
-            return h("div", [edit]);
+            return h("div", edit);
           }
         },
         {
@@ -123,7 +123,7 @@ export default {
               edit = row.address;
             }
 
-            return h("div", [edit]);
+            return h("div", edit);
           }
         },
         {

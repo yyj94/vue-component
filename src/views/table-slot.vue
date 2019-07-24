@@ -2,19 +2,19 @@
   <div>
     <table-slot :columns="columns" :data="data">
       <template slot-scope="{row, index}" slot="name">
-        <input type="text" v-model="editName" v-if="editIndex === index" />>
+        <input type="text" v-model="editName" v-if="editIndex === index" />
         <span v-else>{{row.name}}</span>
       </template>
       <template slot-scope="{row, index}" slot="age">
-        <input type="text" v-model="editAge" v-if="editIndex === index" />>
+        <input type="text" v-model="editAge" v-if="editIndex === index" />
         <span v-else>{{row.age}}</span>
       </template>
       <template slot-scope="{row, index}" slot="birthday">
-        <input type="text" v-model="editBirthday" v-if="editIndex === index" />>
+        <input type="text" v-model="editBirthday" v-if="editIndex === index" />
         <span v-else>{{getBirthday(row.birthday)}}</span>
       </template>
       <template slot-scope="{row, index}" slot="address">
-        <input type="text" v-model="editAddress" v-if="editIndex === index" />>
+        <input type="text" v-model="editAddress" v-if="editIndex === index" />
         <span v-else>{{row.address}}</span>
       </template>
       <template slot-scope="{row, index}" slot="action">
