@@ -40,12 +40,39 @@ export default {
       tree: findComponentsUpward(this, "Tree")
     };
   },
+  watch: {
+    "data.children": {
+      handler(data) {
+        if (data) {
+          const checkedAll = !data.some(item => !item.checked);
+          this.$set(this.data, "checked", checkedAll);
+        }
+      },
+      deep: true
+    }
+  },
   methods: {
     handleExpand() {
       this.$set(this.data, "expand", !this.data.expand);
 
       if (this.tree) {
         this.tree.emitEvent("on-toggle-expand", this.data);
+      }
+    },
+    handleCheck(checked) {
+      this.updateTreeDown(this.data, checked);
+
+      if (this.tree) {
+        this.tree.emitEvent("on-check-change", this.data);
+      }
+    },
+    updateTreeDown(data, checked) {
+      this.$set(data, "checked", checked);
+
+      if (data.children && data.children.length) {
+        data.children.forEach(item => {
+          this.updateTreeDown(item, checked);
+        });
       }
     }
   }
